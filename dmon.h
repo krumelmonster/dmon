@@ -590,7 +590,9 @@ DMON_API_IMPL void dmon_deinit(void)
     {
         int i;
         for (i = 0; i < _dmon.num_watches; i++) {
-            dmon__unwatch(&_dmon.watches[i]);
+            if(_dmon.watches[i].id) {
+                dmon__unwatch(&_dmon.watches[i]);
+            }
         }
     }
 
@@ -669,10 +671,9 @@ DMON_API_IMPL void dmon_unwatch(dmon_watch_id id)
     DMON_ASSERT(index < _dmon.num_watches);
 
     dmon__unwatch(&_dmon.watches[index]);
-    if (index != _dmon.num_watches - 1) {
-        dmon__swap(_dmon.watches[index], _dmon.watches[_dmon.num_watches - 1], dmon__watch_state);
+    if (index == _dmon.num_watches - 1) {
+        --_dmon.num_watches;
     }
-    --_dmon.num_watches;
 
     LeaveCriticalSection(&_dmon.mutex);
     _InterlockedExchange(&_dmon.modify_watches, 0);
@@ -1095,7 +1096,9 @@ DMON_API_IMPL void dmon_deinit(void)
     {
         int i;
         for (i = 0; i < _dmon.num_watches; i++) {
-            dmon__unwatch(&_dmon.watches[i]);
+            if(_dmon.watches[i].id) {
+                dmon__unwatch(&_dmon.watches[i]);
+            }
         }
     }
 
@@ -1199,9 +1202,8 @@ DMON_API_IMPL void dmon_unwatch(dmon_watch_id id)
 
     dmon__unwatch(&_dmon.watches[index]);
     if (index != _dmon.num_watches - 1) {
-        dmon__swap(_dmon.watches[index], _dmon.watches[_dmon.num_watches - 1], dmon__watch_state);
+        --_dmon.num_watches;
     }
-    --_dmon.num_watches;
 
     pthread_mutex_unlock(&_dmon.mutex);
 }
@@ -1451,7 +1453,9 @@ DMON_API_IMPL void dmon_deinit(void)
     {
         int i;
         for (i = 0; i < _dmon.num_watches; i++) {
-            dmon__unwatch(&_dmon.watches[i]);
+          if(_dmon.watches[i].id) {
+              dmon__unwatch(&_dmon.watches[i]);
+          }
         }
     }
 
@@ -1607,10 +1611,9 @@ DMON_API_IMPL void dmon_unwatch(dmon_watch_id id)
     DMON_ASSERT(index < _dmon.num_watches);
 
     dmon__unwatch(&_dmon.watches[index]);
-    if (index != _dmon.num_watches - 1) {
-        dmon__swap(_dmon.watches[index], _dmon.watches[_dmon.num_watches - 1], dmon__watch_state);
+    if (index == _dmon.num_watches - 1) {
+        --_dmon.num_watches;
     }
-    --_dmon.num_watches;
 
     pthread_mutex_unlock(&_dmon.mutex);
     __sync_lock_test_and_set(&_dmon.modify_watches, 0);
