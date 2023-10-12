@@ -590,7 +590,7 @@ DMON_API_IMPL void dmon_deinit(void)
     {
         int i;
         for (i = 0; i < _dmon.num_watches; i++) {
-            if(_dmon.watches[i].id) {
+            if(_dmon.watches[i].id.id) {
                 dmon__unwatch(&_dmon.watches[i]);
             }
         }
@@ -1096,7 +1096,7 @@ DMON_API_IMPL void dmon_deinit(void)
     {
         int i;
         for (i = 0; i < _dmon.num_watches; i++) {
-            if(_dmon.watches[i].id) {
+            if(_dmon.watches[i].id.id) {
                 dmon__unwatch(&_dmon.watches[i]);
             }
         }
@@ -1453,7 +1453,7 @@ DMON_API_IMPL void dmon_deinit(void)
     {
         int i;
         for (i = 0; i < _dmon.num_watches; i++) {
-          if(_dmon.watches[i].id) {
+          if(_dmon.watches[i].id.id) {
               dmon__unwatch(&_dmon.watches[i]);
           }
         }
